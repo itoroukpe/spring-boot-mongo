@@ -2,7 +2,7 @@ node {
     
     stage("Git Clone"){
         
-        git credentialsId: 'GIT_CREDENTIALS', url: 'https://github.com/slegah/spring-boot-mongo-docker.git'
+        git credentialsId: 'GIT_CREDENTIALS', url: 'https://github.com/rondustech/spring-boot-mongo-docker.git'
     }
      stage("Maven Clean Build"){
         def mavenHome = tool name: "Maven-3.6.3", type: "maven"
@@ -10,16 +10,16 @@ node {
         sh "${mavenCMD} clean package"
      }
     stage("Build Docker Image"){
-        sh "docker build -t legah2045/spring-boot-mongo ."
+        sh "docker build -t rondustech/spring-boot-mongo ."
     }
      stage("Docker Push"){
        withCredentials([string(credentialsId: 'DOCKER_HUB_CREDENTIALS', variable: 'DOCKER_HUB_CREDENTIALS3')]) {
-        sh "docker login -u legah2045 -p ${DOCKER_HUB_CREDENTIALS3}"
+        sh "docker login -u rondustech -p ${DOCKER_HUB_CREDENTIALS3}"
     }
-        sh "docker push legah2045/spring-boot-mongo"
+        sh "docker push rondustech/spring-boot-mongo"
     }
 	 stage('Manual Approval'){
-	     echo 'Hi, this is Winifred from Rogers Digital Team'
+	     echo 'Hi, this is Itee from RondusTech Team'
 		 input('Do you want to proceed?')
 	}
     stage("Deploy Application in labs Cluster"){
